@@ -59,19 +59,22 @@ int compareTuple(const void *a, const void *b){
 }
 void coo2csr(
   const int coo_num, tuple<int, int, double> *coo,
-  const int csr_row_num, double ** csr_a, int **csr_row, int **csr_col, int *nnz){
+  const int csr_row_num,
+  double ** csr_a,
+  int **csr_row,
+  int **csr_col
+){
 
   qsort(coo, coo_num, sizeof(tuple<int,int,double>), compareTuple);
   *csr_row = new int [csr_row_num+1];
-  int temp_nnz=1;
+  int nnz=1;
   for (int i=1; i<coo_num; i++) {
     if (get<0>(coo[i])!=get<0>(coo[i-1]) || get<1>(coo[i])!=get<1>(coo[i-1])){
-      temp_nnz++;
+      nnz++;
     }
   }
-  *nnz=temp_nnz;
-  *csr_a = new double [temp_nnz];
-  *csr_col = new int [temp_nnz];
+  *csr_a = new double [nnz];
+  *csr_col = new int [nnz];
   double *A=*csr_a;
   int *row=*csr_row, *col=*csr_col;
   for (int i=0; i<csr_row_num+1; i++){
@@ -104,16 +107,25 @@ void coo2csr(
   for (int i=get<0>(coo[coo_num-1])+1; i<=csr_row_num; i++ ){
     row[i]=index;
   }
-  if (index!=temp_nnz){
+  if (index!=nnz){
     cerr<<"coo2csr Error\n";
     exit(1);
   }
 }
 
 void constructLaplacianSparse(
-  const Method method, const int nv, const int nb, const int nf, const double *V, const int *F,
-  double **ptr_Lii_val, int **ptr_Lii_row, int **ptr_Lii_col, int *ptr_Lii_nnz,
-  double **ptr_Lib_val, int **ptr_Lib_row, int **ptr_Lib_col, int *ptr_Lib_nnz
+  const Method method,
+  const int nv,
+  const int nb,
+  const int nf,
+  const double *V,
+  const int *F,
+  double **ptr_Lii_val,
+  int **ptr_Lii_row,
+  int **ptr_Lii_col,
+  double **ptr_Lib_val,
+  int **ptr_Lib_row,
+  int **ptr_Lib_col
 ) {
   int Lii_nnz=nv-nb, Lib_nnz=0, F_x=0, F_y=0, F_z=0;
   for (int i=0; i<nf; i++) {
@@ -227,8 +239,8 @@ void constructLaplacianSparse(
     }
 
   }
-  coo2csr(Lib_nnz, Lib, nv-nb, ptr_Lib_val, ptr_Lib_row, ptr_Lib_col, ptr_Lib_nnz);
-  coo2csr(Lii_nnz, Lii, nv-nb, ptr_Lii_val, ptr_Lii_row, ptr_Lii_col, ptr_Lii_nnz);
+  coo2csr(Lib_nnz, Lib, nv-nb, ptr_Lib_val, ptr_Lib_row, ptr_Lib_col);
+  coo2csr(Lii_nnz, Lii, nv-nb, ptr_Lii_val, ptr_Lii_row, ptr_Lii_col);
   delete [] Lii;
   delete [] Lib;
 }

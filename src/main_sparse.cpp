@@ -8,7 +8,6 @@
 #include <iostream>
 #include <harmonic.hpp>
 #include <timer.hpp>
-#include <fstream>
 using namespace std;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -20,8 +19,7 @@ int main( int argc, char** argv ) {
   const char *output = "output.obj";
   Method method  = Method::KIRCHHOFF;
 
-  int nv, nf, nb, Lii_nnz = 0, Lib_nnz = 0, *F = nullptr, *idx_b,
-      *Lii_row = nullptr, *Lii_col = nullptr, *Lib_row = nullptr, *Lib_col = nullptr;
+  int nv, nf, nb, *F = nullptr, *idx_b, *Lii_row = nullptr, *Lii_col = nullptr, *Lib_row = nullptr, *Lib_col = nullptr;
   double timer, *V = nullptr, *C = nullptr, *Lii_val = nullptr, *Lib_val = nullptr, *U;
 
 
@@ -43,14 +41,14 @@ int main( int argc, char** argv ) {
   // Reorder vertices
   cout << "Reordering vertices ...................." << flush;
   tic(&timer);
-  reorderVertex(nv, nb, nf, idx_b, V, C, F); cout << " Done.  ";
+  reorderVertex(nv, nb, nf, V, C, F, idx_b); cout << " Done.  ";
   toc(&timer);
 
   // Construct Laplacian
   cout << "Constructing Laplacian ................." << flush;
   tic(&timer);
-  constructLaplacianSparse(method, nv, nb, nf, V, F, &Lii_val, &Lii_row, &Lii_col, &Lii_nnz,
-                                                     &Lib_val, &Lib_row, &Lib_col, &Lib_nnz); cout << " Done.  ";
+  constructLaplacianSparse(method, nv, nb, nf, V, F, &Lii_val, &Lii_row, &Lii_col, &Lib_val, &Lib_row, &Lib_col);
+  cout << " Done.  ";
   toc(&timer);
 
   // Map boundary

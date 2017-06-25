@@ -13,4 +13,4 @@ all: $(TGTS)
 main:
 
 clean:
-	$(RM) $(TGTS) *.o
+	rm -r $(TGTS) *.o

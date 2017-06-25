@@ -5,6 +5,7 @@
 /// @author  Yuhsiang Mike Tsai
 ///
 
+#include <iostream>
 #include <harmonic.hpp>
 #include <mkl.h>
 using namespace std;

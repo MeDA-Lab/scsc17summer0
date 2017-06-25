@@ -15,19 +15,19 @@ all: $(TGTS)
 main:
 
 test: test.o read_args.o read_object.o construct_laplacian.o
-	$(CXX) $(CXXFLAGS) $^ -o $@ $(INCS)
+	$(CXX) $(CXXFLAGS) $^ -o $@
 
-test.o: test.cpp
-	$(CXX) $(CXXFLAGS) -c $^ -o $@
+test.o: src/test.cpp
+	$(CXX) $(CXXFLAGS) -c $^ -o $@ $(INCS)
 
-read_args.o: read_args.cpp
-	$(CXX) $(CXXFLAGS) -c $^ -o $@
+read_args.o: src/core/read_args.cpp
+	$(CXX) $(CXXFLAGS) -c $^ -o $@ $(INCS)
 
-read_object.o: read_object.cpp
-	$(CXX) $(CXXFLAGS) -c $^ -o $@
+read_object.o: src/core/read_object.cpp
+	$(CXX) $(CXXFLAGS) -c $^ -o $@ $(INCS)
 
-construct_laplacian.o: construct_laplacian.cpp
-	$(CXX) $(CXXFLAGS) -c $^ -o $@
+construct_laplacian.o: src/core/construct_laplacian.cpp
+	$(CXX) $(CXXFLAGS) -c $^ -o $@ $(INCS)
 
 clean:
 	rm -r $(TGTS) *.o

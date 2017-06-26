@@ -67,16 +67,19 @@ void verifyBoundary( const int nv, const int nf, const int *F, int *ptr_nb, int 
 ///
 /// @param[in]   nv     the number of vertices.
 /// @param[in]   nb     the number of boundary vertices.
-/// @param[in]   idx_b  the indices of boundary vertices; nb by 1 vector.
+/// @param[in]   nf     the number of faces.
 /// @param[in]   V      the coordinate of vertices;       nv by 3 matrix.
 /// @param[in]   C      the color (RGB) of the vertices;  nv by 3 matrix.
+/// @param[in]   F      the faces;                        nf by 3 matrix.
 ///
 /// @param[out]  V      replaced by the reordered coordinate of vertices;      nv by 3 matrix.
 /// @param[out]  C      replaced by the reordered color (RGB) of the vertices; nv by 3 matrix.
+/// @param[out]  F      replaced by the reordered faces;                       nv by 3 matrix.
+/// @param[out]  idx_b  the indices of boundary vertices;                      nb by 1 vector.
 ///
 /// @note  the vertices are reordered so that the first nb vertices are the boundary vertices.
 ///
-void reorderVertex( const int nv, const int nb, const int nf, const int *idx_b, double *V, double *C, int *F );
+void reorderVertex( const int nv, const int nb, const int nf, double *V, double *C, int *F, const int *idx_b );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @brief  Construct the Laplacian.
@@ -85,7 +88,6 @@ void reorderVertex( const int nv, const int nb, const int nf, const int *idx_b, 
 /// @param[in]   nv      the number of vertices.
 /// @param[in]   nf      the number of faces.
 /// @param[in]   V       the coordinate of vertices;      nv by 3 matrix.
-/// @param[in]   C       the color (RGB) of the vertices; nv by 3 matrix.
 /// @param[in]   F       the faces; nf by 3 matrix.
 ///
 /// @param[out]  L       the Laplacian matrix; nv by nv matrix.
@@ -158,24 +160,21 @@ void verifyBoundarySparse( const int nv, const int nf, const int *F, int *ptr_nb
 /// @param[in]   nb           the number of boundary.
 /// @param[in]   nf           the number of faces.
 /// @param[in]   V            the coordinate of vertices; nv by 3 matrix.
-/// @param[in]   C            the color of the vertices; nv by 3 matrix; RGB.
 /// @param[in]   F            the faces; nf by 3 matrix.
 ///
 /// @param[out]  ptr_Lii_val  the values of the Laplacian matri;          Lii part; pointer-to-pointer.
 /// @param[out]  ptr_Lii_row  the row indices of the Laplacian matrix;    Lii part; pointer-to-pointer.
 /// @param[out]  ptr_Lii_col  the column indices of the Laplacian matrix; Lii part; pointer-to-pointer.
-/// @param[out]  ptr_Lii_nnz  the nonzeros in the Laplacian matrix;       Lii part; pointer.
 ///
 /// @param[out]  ptr_Lib_val  the values of the Laplacian matri;          Lib part; pointer-to-pointer.
 /// @param[out]  ptr_Lib_row  the row indices of the Laplacian matrix;    Lib part; pointer-to-pointer.
 /// @param[out]  ptr_Lib_col  the column indices of the Laplacian matrix; Lib part; pointer-to-pointer.
-/// @param[out]  ptr_Lib_nnz  the nonzeros in the Laplacian matrix;       Lib part; pointer.
 ///
 /// @note  The arrays are allocated by this routine (using new).
 ///
 void constructLaplacianSparse( const Method method, const int nv, const int nb, const int nf, const double *V, const int *F,
-                               double **ptr_Lii_val, int **ptr_Lii_row, int **ptr_Lii_col, int *ptr_Lii_nnz,
-                               double **ptr_Lib_val, int **ptr_Lib_row, int **ptr_Lib_col, int *ptr_Lib_nnz);
+                               double **ptr_Lii_val, int **ptr_Lii_row, int **ptr_Lii_col,
+                               double **ptr_Lib_val, int **ptr_Lib_row, int **ptr_Lib_col);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @brief  Solve the harmonic problem. (sparse version)
@@ -185,11 +184,9 @@ void constructLaplacianSparse( const Method method, const int nv, const int nb, 
 /// @param[in]   Lii_val  the values of the Laplacian matrix;         Lii part.
 /// @param[in]   Lii_row  the row indices of the Laplacian matrix;    Lii part.
 /// @param[in]   Lii_col  the column indices of the Laplacian matrix; Lii part.
-/// @param[in]   Lii_nnz  the nonzeros in the Laplacian matrix;       Lii part.
 /// @param[in]   Lib_val  the values of the Laplacian matrix;         Lib part.
 /// @param[in]   Lib_row  the row indices of the Laplacian matrix;    Lib part.
 /// @param[in]   Lib_col  the column indices of the Laplacian matrix; Lib part.
-/// @param[in]   Lib_nnz  the nonzeros in the Laplacian matrix;       Lib part.
 /// @param[in]   U        the coordinate of vertices on the disk; nv by 2 matrix. The first nb vertices are given.
 ///
 /// @param[out]  U        the coordinate of vertices on the disk; nv by 2 matrix. The last (nv-nb) vertices are replaced.

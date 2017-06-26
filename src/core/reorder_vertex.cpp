@@ -14,10 +14,10 @@ void reorderVertex(
     const int nv,
     const int nb,
     const int nf,
-    const int *idx_b,
     double *V,
     double *C,
-    int *F
+    int *F,
+    const int *idx_b
 ) {
   double *V_cp = new double [nv*3], *C_cp = new double [nv*3];
   int *used = new int [nv];

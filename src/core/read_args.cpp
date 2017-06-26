@@ -12,7 +12,7 @@
 
 using namespace std;
 
-const char* const short_opt = ":hf:w:o:";
+const char* const short_opt = ":hf:t:o:";
 
 const struct option long_opt[] = {
   {"help",   0, NULL, 'h'},
@@ -37,7 +37,7 @@ void dispUsage( const char *bin ) {
 }
 
 void readArgs( int argc, char** argv, const char *&input, const char *&output, Method &method ) {
-  int c = 0;
+  char c = 0;
   while ( (c = getopt_long(argc, argv, short_opt, long_opt, NULL)) != -1 ) {
     switch ( c ) {
       case 'h': {
@@ -62,12 +62,12 @@ void readArgs( int argc, char** argv, const char *&input, const char *&output, M
       }
 
       case ':': {
-        cout << "Option -" << optopt << " requires an argument.\n";
+        cout << "Option -" << c << " requires an argument.\n";
         abort();
       }
 
       case '?': {
-        cout << "Unknown option -" << optopt << endl;
+        cout << "Unknown option -" << c << endl;
         abort();
       }
     }

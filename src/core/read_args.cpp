@@ -12,7 +12,7 @@
 
 using namespace std;
 
-const char* const short_opt = ":hf:t:o:";
+const char* const short_opt = "hf:t:o:";
 
 const struct option long_opt[] = {
   {"help",   0, NULL, 'h'},

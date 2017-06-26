@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @file    construct_laplacian_sparse.cpp
-/// @brief   The implementation of Laplacian construction.
+/// @brief   The implementation of Laplacian construction. (sparse version)
 ///
 /// @author  Yen Chen Chen
 /// @author  Yuhsiang Mike Tsai

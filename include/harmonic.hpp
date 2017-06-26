@@ -13,8 +13,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @brief  The enumeration of Laplacian construction methods.
 ///
-/// @todo   Finish the enumeration.
-///
 enum class Method {
   KIRCHHOFF = 0,  ///< Kirchhoff Laplacian matrix.
   COTANGENT = 1,  ///< Cotangent Laplacian matrix.

@@ -3,7 +3,7 @@ CXXFLAGS = -O2 -std=c++11
 
 INCS = -I include
 
-TGT  = main
+TGT  = main test
 TGTS = $(TGT)
 
 HDRS =
@@ -31,5 +31,3 @@ construct_laplacian.o: src/core/construct_laplacian.cpp
 
 clean:
 	rm -r $(TGTS) *.o
-cleantest:
-	rm -r test *.o

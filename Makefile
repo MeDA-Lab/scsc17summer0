@@ -31,3 +31,5 @@ construct_laplacian.o: src/core/construct_laplacian.cpp
 
 clean:
 	rm -r $(TGTS) *.o
+cleantest:
+	rm -r test *.o

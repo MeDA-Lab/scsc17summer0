@@ -1,5 +1,5 @@
 CXX      = g++
-CXXFLAGS = -O2 -std=c++11 -fopenmp -Wall -Wextra -pedantic
+CXXFLAGS = -O2 -std=c++11
 
 TGT        = main
 MKLTGT     = main_mkl

@@ -33,5 +33,6 @@
 
 # Others
 *.json
-main
+main*
+test
 !data

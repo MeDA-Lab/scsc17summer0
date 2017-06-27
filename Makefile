@@ -27,10 +27,10 @@ OBJ = \
 all: $(TGTS)
 
 %.o: src/%.cpp $(HDRS)
-	$(CXX) $(CXXFLAGS) -c $< $(INC)
+	$(CXX) $(CXXFLAGS) -c $< $(INCS)
 
 %.o: src/core/%.cpp $(HDRS)
-	$(CXX) $(CXXFLAGS) -c $< $(INC)
+	$(CXX) $(CXXFLAGS) -c $< $(INCS)
 
 main: main.o $(OBJ)
 	$(CXX) $(CXXFLAGS) $< $(OBJ) -o $@

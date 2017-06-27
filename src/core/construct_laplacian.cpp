@@ -91,7 +91,7 @@ void constructLaplacian(
       L[F_z*nv+F_x] += -0.5*Dot(3, v_kj, v_ij)/CrossNorm(v_kj, v_ij);
       L[F_x*nv+F_z] = L[F_z*nv+F_x];
     }
-    for (int i = 0; i<nv; i++) {
+    for (int i = 0; i<nv; i++){
       L[i*nv+i]=-1*Sum(nv, L+i*nv, 1);
     }
   }
